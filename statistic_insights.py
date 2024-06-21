@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 
 
 class DataStatistic:
@@ -32,13 +31,13 @@ class DataStatistic:
         value = self.violence_data.max()
         return [index, value]
 
-    # def outlier(self):
-    #     diq = self.statistics['Q3'] - self.statistics['Q1']
-    #     lower_bound = self.statistics['Q1'] - 1.5 * diq
-    #     upper_bound = self.statistics['Q3'] + 1.5 * diq
-    #     # outliers = self.violence_data[(self.violence_data < lower_bound) |
-    #     #                               (self.violence_data > upper_bound)]
-    #     return outliers
+    def outlier(self):
+        diq = self.statistics['Q3'] - self.statistics['Q1']
+        lower_bound = self.statistics['Q1'] - 1.5 * diq
+        upper_bound = self.statistics['Q3'] + 1.5 * diq
+        outliers = [bound for bound in self.violence_data if bound < lower_bound or bound > upper_bound]
+
+        return f"Não há outliers" if not outliers else f"Outliers:{outliers}"
 
     def __str__(self):
         return (f"Média: {self.statistics['mean']:.2f} \n"
