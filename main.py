@@ -1,14 +1,35 @@
-import statistic_insights as st
+import statistics as st
+import line_graphic as lg
+import boxplot_graphic as bg
+import read_file as rf
 
-url = 'homicidios.xlsx'
-sheet_name = 'Planilha2'
+# url = input("Informe a url da planilha")
+# sheet_name = input("Informe o nome da planilha")
+url = "homicidios.xlsx"
+sheet_name = "Planilha2"
+data_file = rf.reading_file(url, sheet_name)
+print(data_file.transpose())
 
-data_xlsx = st.DataStatistic(url, sheet_name)
-statistics = data_xlsx.analyze_data()
-score_z = data_xlsx.calculate_score_z(2017)
-highest_index_value = data_xlsx.finding_highest_index()
+print("0 para ver dados estatísticos")
+print("1 para gerar um gráfico de linhas")
+print("2 para gerar um boxplot")
+print("3 Score Z")
+option = input()
 
-print(data_xlsx)
-print(f"O ano com maior índice de violência foi {highest_index_value[0]}, com o valor de {highest_index_value[1]} \n"
-      f"Sua distância em relação à média (escore z) de {score_z:.2f}")
-print(data_xlsx.outlier())
+if option == '0':
+    data_statistics = st.DataStatistic(data_file.squeeze())
+    print(data_statistics)
+
+elif option == '1':
+    lg.generating_graphic(data_file.transpose())
+
+elif option == '2':
+    bg.graphic_generator_boxplot(data_file.transpose())
+
+elif option == '3':
+    input_score_z = int(input("Informe o valor de Score Z: "))
+    score_z = st.calculate_score_z(data_file.squeeze(), input_score_z)
+    print(f"Sua distância em relação à média (escore z) de {score_z:.2f}")
+
+else:
+    print("Opção não encontrada.")

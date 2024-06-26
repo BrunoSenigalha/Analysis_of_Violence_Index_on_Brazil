@@ -1,12 +1,15 @@
-import pandas as pd
+import matplotlib.pyplot as plt
 
 
-class Statistic:
-    def __init__(self, url, sheet_name):
-        self.url = url
-        self.sheet_name = sheet_name
-
-    def reading_file(self):
-        violence_file = pd.read_excel(self.url, index_col=0, sheet_name=self.sheet_name).squeeze()
-        return violence_file
-
+def generating_graphic(file_data):
+    plt.figure(figsize=(15, 10))
+    plt.style.use('_classic_test_patch')
+    plt.plot(file_data, marker='o')
+    plt.annotate('Ano do Desarmamento', color='red', xy=(2003, 30.0), xytext=(2002, 29.7))
+    plt.title("Taxa de Homicídio no Brasil")
+    plt.ylabel("Taxa de Homicídio")
+    plt.xlabel("Anos")
+    plt.xlim([1980, 2021])
+    plt.xticks(file_data.index, rotation=45)
+    plt.grid()
+    plt.show()
